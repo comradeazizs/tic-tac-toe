@@ -7,7 +7,7 @@ const gameboard = (function () {
          wins
       };
    };
-   
+
    checkWin = function () {
       for (let i = 0; i < 7; i += 3) {
          if (!board[i]) {
@@ -31,12 +31,12 @@ const gameboard = (function () {
       return false;
    };
 
-   checkDraw = function(){
-      if(!board.includes(undefined)){
+   checkDraw = function () {
+      if (!board.includes(undefined)) {
          return true;
       }
       return false;
-   }
+   };
    const player1 = createPlayer("Player1", "X", 0);
    const player2 = createPlayer("Player2", "O", 0);
 
@@ -61,33 +61,17 @@ const gameboard = (function () {
             clearCells();
             restart();
             return;
-         }else if(checkDraw()){
+         } else if (checkDraw()) {
             message.textContent = `Draw`;
             clearArr();
             clearCells();
             restart();
-            return
+            return;
          }
       }
       currentTurn === player1
          ? (currentTurn = player2)
          : (currentTurn = player1);
-      printBoard();
-   };
-
-   printBoard = function () {
-      let string = "";
-      for (let i = 0; i < board.length; i++) {
-         if (i % 3 == 0) {
-            string += "\n";
-         }
-         if (!board[i]) {
-            string += ` _ `;
-         } else {
-            string += ` ${board[i]} `;
-         }
-      }
-      console.log(string);
    };
 
    clearArr = function () {
@@ -115,5 +99,5 @@ const gameboard = (function () {
          }
       });
    });
-   return { putMarker, printBoard, checkWin, clearArr, clearCells };
+   return;
 })();
