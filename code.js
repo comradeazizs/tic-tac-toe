@@ -7,12 +7,12 @@ const gameboard = (function () {
          wins
       };
    };
-
+   
    checkWin = function () {
       for (let i = 0; i < 7; i += 3) {
          if (!board[i]) {
             continue;
-         } else if (board[i] === board[i + 1] && board[i] === board[i + 1]) {
+         } else if (board[i] === board[i + 1] && board[i] === board[i + 2]) {
             return board[i];
          }
       }
@@ -25,23 +25,54 @@ const gameboard = (function () {
       }
       if (board[0] && board[0] === board[4] && board[0] === board[8]) {
          return board[0];
-      } else if (board[2] && board[2] === board[4] && board[2] === board[6]){
+      } else if (board[2] && board[2] === board[4] && board[2] === board[6]) {
          return board[2];
       }
-         return false;
+      return false;
    };
-   const player1 = createPlayer("Aziz", "X", 0);
-   const player2 = createPlayer("Alex", "O", 0);
+
+   checkDraw = function(){
+      if(!board.includes(undefined)){
+         return true;
+      }
+      return false;
+   }
+   const player1 = createPlayer("Player1", "X", 0);
+   const player2 = createPlayer("Player2", "O", 0);
+
    let currentTurn = player1;
+   restart = function () {
+      currentTurn = player1;
+   };
+
+   let message = document.querySelector(".message");
+   let xScore = document.querySelector(".xScore");
+   let oScore = document.querySelector(".oScore");
 
    putMarker = function (index) {
       if (!board[index]) {
          board[index] = currentTurn.marker;
-         currentTurn === player1
-            ? (currentTurn = player2)
-            : (currentTurn = player1);
-         printBoard();
+         if (checkWin()) {
+            currentTurn.wins++;
+            message.textContent = `${currentTurn.marker}  Wins`;
+            xScore.textContent = `${player1.wins}`;
+            oScore.textContent = `${player2.wins}`;
+            clearArr();
+            clearCells();
+            restart();
+            return;
+         }else if(checkDraw()){
+            message.textContent = `Draw`;
+            clearArr();
+            clearCells();
+            restart();
+            return
+         }
       }
+      currentTurn === player1
+         ? (currentTurn = player2)
+         : (currentTurn = player1);
+      printBoard();
    };
 
    printBoard = function () {
@@ -58,8 +89,31 @@ const gameboard = (function () {
       }
       console.log(string);
    };
-   return { putMarker, printBoard, checkWin };
+
+   clearArr = function () {
+      for (let i = 0; i < board.length; i++) {
+         board[i] = undefined;
+      }
+   };
+
+   let cells = [...document.querySelectorAll(".cell")];
+
+   clearCells = function () {
+      cells.forEach((cell) => {
+         cell.classList.remove("X", "O");
+      });
+   };
+
+   cells.forEach((cell) => {
+      cell.addEventListener("click", (e) => {
+         if (
+            !e.target.classList.contains("O") &&
+            !e.target.classList.contains("X")
+         ) {
+            e.target.classList.add(`${currentTurn.marker}`);
+            putMarker(e.target.dataset.indexNumber);
+         }
+      });
+   });
+   return { putMarker, printBoard, checkWin, clearArr, clearCells };
 })();
-
-
-

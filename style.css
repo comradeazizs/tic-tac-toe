@@ -1,0 +1,62 @@
+body{
+   background-color: white;
+   margin: 0;
+}
+.header {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   width: 100vw;
+}
+.header h1{
+   font-size: 40pt;
+}
+.scoreboard{
+   display: flex;
+   flex-direction: row;
+   height: 100px;
+   width: 500px;
+   background-color: yellow;
+   border-radius: 25px;
+   margin: 15px;
+}
+.scoreboard>div:nth-child(1),
+.scoreboard>div:nth-child(3){
+   flex: 1;
+}
+.scoreboard>div:nth-child(2){
+   flex: 2;
+   text-align: center;
+}
+.scoreboard>div>p{
+   font-size: 30px;
+   font-weight: bold;
+   margin: 10px 0;
+   text-align: center;
+}
+
+.board {
+   height: 500px;
+   width: 500px;
+   margin: auto;
+   background-color: white;
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   grid-template-rows: repeat(3, 1fr);
+   gap: 15px;
+}
+.cell {
+   background-color: #17dac7;
+   border-radius: 25px ;
+}
+.O {
+   background-image: url(./icons/alpha-o.svg);
+   background-repeat: no-repeat;
+   background-size:contain;
+}
+.X {
+   background-image: url(./icons/alpha-x.svg);
+   background-repeat: no-repeat;
+   background-size:contain;
+}
